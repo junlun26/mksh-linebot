@@ -7,8 +7,6 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('U5hlah8NxPTDI61P6+cqf+sVBTJixlenSE/ihCGVYVRf0kbVGUMP57qOBpxxzTIIeXdWvX5dnF6jXdOP/mASdmTKiV/XM5qbRVUHn0DvXckVqNVTBo/A+zT+v+NHTr7li4fjHgwFT8JgvFBDVYZjOAdB04t89/1O/w1cDnyilFU=')  
 handler = WebhookHandler('1b59f7e2aae7872e0ec20799920c474b')
 
-line_bot_api.push_message('你自己的ID', TextSendMessage(text='你可以開始了'))
-
 @app.route("/callback", methods=['POST']) 
 def callback():     
     # get X-Line-Signature header value     
