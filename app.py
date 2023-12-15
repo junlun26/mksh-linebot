@@ -2,6 +2,10 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import pygsheets
 
 app = Flask(__name__)  
 
