@@ -39,7 +39,7 @@ def callback():
 def handle_message(event):
     text = event.message.text
     if text == "本周重要公告":
-        wks = sht[sheet]
+        wks = sht[0]
         reply = wks.get_as_df()
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply))
 
