@@ -8,6 +8,9 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('U5hlah8NxPTDI61P6+cqf+sVBTJixlenSE/ihCGVYVRf0kbVGUMP57qOBpxxzTIIeXdWvX5dnF6jXdOP/mASdmTKiV/XM5qbRVUHn0DvXckVqNVTBo/A+zT+v+NHTr7li4fjHgwFT8JgvFBDVYZjOAdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('1b59f7e2aae7872e0ec20799920c474b')
 
+gc = pygsheets.authorize(service_account_file='./gsheet.json')
+sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/1cxvkIggrRHYnZy0oUH-leCFHy3gWdJGEi7XC3i1Hv3c/edit#gid=0')
+
 @app.route("/callback", methods=['OPTIONS', 'POST'])
 def callback():
     if request.method == 'OPTIONS':
@@ -30,7 +33,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+    text = event.message.text
+    if text == "本周重要公告":
+        wks = sht[sheet]
+        reply = wks.get_as_df()
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(reply))
 
 @app.route("/")
 def home():
