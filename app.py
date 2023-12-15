@@ -37,7 +37,7 @@ def handle_message(event):
     if text == "本周重要公告":
         wks = sht[sheet]
         reply = wks.get_as_df()
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(reply))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply))
 
 @app.route("/")
 def home():
