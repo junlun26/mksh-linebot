@@ -84,9 +84,7 @@ def handle_message(event):
         wks = sht[0]
         flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
         flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
-        #reply = wks.get_value("A2")
-        flex_message_json = json.dumps(flex_message)
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=flex_message_json))
+        line_bot_api.reply_message(event.reply_token,FlexSendMessage(alt_text="本周重要公告", contents=flex_message))
 
 @app.route("/")
 def home():
