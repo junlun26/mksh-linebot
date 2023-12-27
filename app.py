@@ -16,6 +16,47 @@ handler = WebhookHandler('1b59f7e2aae7872e0ec20799920c474b')
 gc = pygsheets.authorize(service_account_file='./gsheet.json')
 sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/1cxvkIggrRHYnZy0oUH-leCFHy3gWdJGEi7XC3i1Hv3c/edit#gid=0')
 
+flex_message = {
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "./mkjh icon.jpg",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "text",
+        "text": "",
+        "size": "xl",
+        "weight": "bold"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "color": "#905c44",
+        "margin": "xxl",
+        "action": {
+          "type": "uri",
+          "label": "前往網站",
+          "uri": ""
+        }
+      }
+    ]
+  }
+}
+
 @app.route("/callback", methods=['OPTIONS', 'POST'])
 def callback():
     if request.method == 'OPTIONS':
@@ -41,8 +82,11 @@ def handle_message(event):
     text = event.message.text
     if text == "本周重要公告":
         wks = sht[0]
-        reply = wks.get_value("A2")
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=reply))
+        flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
+        flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
+        #reply = wks.get_value("A2")
+        flex_message_json = json.dumps(flex_message)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=flex_message_json))
 
 @app.route("/")
 def home():
