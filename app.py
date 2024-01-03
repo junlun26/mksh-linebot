@@ -105,10 +105,10 @@ def handle_message(event):
         #columns = creat_columns(wks)
         columns = CarouselColumn(
             thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
-            title = working_sheet.get_value("A2"),
+            title = wks.get_value("A2"),
             text = "",
             actions = [
-                URIAction(label = "前往網站", uri = working_sheet.get_value("B2"))
+                URIAction(label = "前往網站", uri = wks.get_value("B2"))
             ]
         )
         #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
