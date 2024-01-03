@@ -57,6 +57,26 @@ flex_message = {
   }
 }
 
+def creat_columns(working_sheet):
+    all_rows = working_sheet.get_all_values(returnas='matrix')
+    non_empty_rows = 0
+    for row in all_rows:
+        if any(cell.strip() for cell in row):
+            non_empty_rows += 1
+
+    columns = []
+    for i in range(2, get_row_amount(wks) + 2):
+        column = CarouselColumn(
+            thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
+            title = wks.get_value(i, 1),
+            text = "",
+            actions = [
+                URIAction(label = "前往網站", wks.get_value(i, 2))
+            ]
+        )
+        columns.append(column)
+    return columns
+    
 @app.route("/callback", methods=['OPTIONS', 'POST'])
 def callback():
     if request.method == 'OPTIONS':
@@ -82,9 +102,10 @@ def handle_message(event):
     text = event.message.text
     if text == "本周重要公告":
         wks = sht[0]
-        flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
-        flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
-        line_bot_api.reply_message(event.reply_token,FlexSendMessage(alt_text="本周重要公告", contents=flex_message))
+        columns = creat_columns(wks)  
+        #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
+        #flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
 
 @app.route("/")
 def home():
