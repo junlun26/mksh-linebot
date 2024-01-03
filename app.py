@@ -102,7 +102,7 @@ def handle_message(event):
     text = event.message.text
     if text == "本周重要公告":
         wks = sht[0]
-        columns = creat_columns(wks)
+        column = creat_columns(wks)
         #columns = CarouselColumn(
         #    thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
         #    title = wks.get_value("A2"),
@@ -113,15 +113,15 @@ def handle_message(event):
         #)
         #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
         #flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns)))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns = column)))
     elif text == "本月榮譽榜":
         wks = sht[1]
         columns = creat_columns(wks)
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns)))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns = column)))
     elif text == "活動、競賽資訊":
         wks = sht[2]
         columns = creat_columns(wks)
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns)))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns = column)))
 
 @app.route("/")
 def home():
