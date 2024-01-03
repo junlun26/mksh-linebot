@@ -23,7 +23,7 @@ def creat_columns(working_sheet):
             non_empty_rows += 1
 
     columns = []
-    for i in range(2, get_row_amount(working_sheet) + 2):
+    for i in range(2, non_empty_rows + 2):
         column = CarouselColumn(
             thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
             title = working_sheet.get_value(i, 1),
