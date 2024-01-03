@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import pygsheets
-import json
 
 app = Flask(__name__)  
 
@@ -15,47 +14,6 @@ handler = WebhookHandler('1b59f7e2aae7872e0ec20799920c474b')
 
 gc = pygsheets.authorize(service_account_file='./gsheet.json')
 sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/1cxvkIggrRHYnZy0oUH-leCFHy3gWdJGEi7XC3i1Hv3c/edit#gid=0')
-
-flex_message = {
-  "type": "bubble",
-  "hero": {
-    "type": "image",
-    "url": "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
-    "size": "full",
-    "aspectRatio": "20:13",
-    "aspectMode": "cover",
-  },
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "spacing": "md",
-    "contents": [
-      {
-        "type": "text",
-        "text": "",
-        "size": "xl",
-        "weight": "bold"
-      }
-    ]
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "button",
-        "style": "primary",
-        "color": "#905c44",
-        "margin": "xxl",
-        "action": {
-          "type": "uri",
-          "label": "前往網站",
-          "uri": ""
-        }
-      }
-    ]
-  }
-}
 
 def creat_columns(working_sheet):
     all_rows = working_sheet.get_all_values(returnas='matrix')
@@ -105,6 +63,14 @@ def handle_message(event):
         columns = creat_columns(wks)  
         #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
         #flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
+    elif text == "本月榮譽榜":
+        wks = sht[1]
+        columns = creat_columns(wks)
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
+    elif text == "活動、競賽資訊":
+        wks = sht[2]
+        columns = creat_columns(wks)
         line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
 
 @app.route("/")
