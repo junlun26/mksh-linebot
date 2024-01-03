@@ -114,7 +114,7 @@ def handle_message(event):
         #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
         #flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
         for i in range(len(column) // 10 + 1):
-            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns = column[i * 10, i * 10 + 9])))
+            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = CarouselTemplate(columns = column[i * 10:i * 10 + 9])))
     elif text == "本月榮譽榜":
         wks = sht[1]
         columns = creat_columns(wks)
