@@ -69,7 +69,7 @@ def creat_columns(working_sheet):
         column = CarouselColumn(
             thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
             title = working_sheet.get_value("A" + str(i)),
-            text = "",
+            text = " ",
             actions = [
                 URIAction(label = "前往網站", uri = working_sheet.get_value("B" + str(i)))
             ]
