@@ -71,7 +71,7 @@ def creat_columns(working_sheet):
             title = working_sheet.get_value(i, 1),
             text = "",
             actions = [
-                URIAction(label = "前往網站", working_sheet.get_value(i, 2))
+                URIAction(label = "前往網站", uri = working_sheet.get_value(i, 2))
             ]
         )
         columns.append(column)
