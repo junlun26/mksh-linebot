@@ -65,13 +65,13 @@ def creat_columns(working_sheet):
             non_empty_rows += 1
 
     columns = []
-    for i in range(2, get_row_amount(wks) + 2):
+    for i in range(2, get_row_amount(working_sheet) + 2):
         column = CarouselColumn(
             thumbnail_image_url = "https://www.mksh.phc.edu.tw/wp-content/uploads/sites/99/2022/05/%E6%A0%A1%E5%BE%BD.jpg",
-            title = wks.get_value(i, 1),
+            title = working_sheet.get_value(i, 1),
             text = "",
             actions = [
-                URIAction(label = "前往網站", wks.get_value(i, 2))
+                URIAction(label = "前往網站", working_sheet.get_value(i, 2))
             ]
         )
         columns.append(column)
