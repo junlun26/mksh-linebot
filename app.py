@@ -63,15 +63,15 @@ def handle_message(event):
         columns = creat_columns(wks)  
         #flex_message["body"]["contents"][0]["text"] = wks.get_value("A2")
         #flex_message["footer"]["contents"][0]["action"]["uri"] = wks.get_value("B2")
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = columns))
     elif text == "本月榮譽榜":
         wks = sht[1]
         columns = creat_columns(wks)
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = columns))
     elif text == "活動、競賽資訊":
         wks = sht[2]
         columns = creat_columns(wks)
-        line_bot_api.reply_message(event.reply_token, TemplateSendMessag(alt_text = "多頁訊息", template = columns))
+        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "多頁訊息", template = columns))
 
 @app.route("/")
 def home():
